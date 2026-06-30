@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="LifeSync — Your personal AI concierge agent powered by Google Gemini. Chat to get time, weather, calculations, and more.">
+    <title>LifeSync — AI Concierge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <!-- Background ambient glow -->
+    <div class="ambient-glow"></div>
+
+    <div class="app-container">
+
+        <!-- Header -->
+        <header class="app-header" id="app-header">
+            <div class="header-left">
+                <div class="logo-icon">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                        <circle cx="14" cy="14" r="12" stroke="url(#grad)" stroke-width="2.5" fill="none"/>
+                        <circle cx="14" cy="14" r="5" fill="url(#grad)"/>
+                        <defs>
+                            <linearGradient id="grad" x1="0" y1="0" x2="28" y2="28">
+                                <stop offset="0%" stop-color="#a78bfa"/>
+                                <stop offset="100%" stop-color="#6ee7b7"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="header-text">
+                    <h1>LifeSync</h1>
+                    <span class="header-subtitle">AI Concierge</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="status-dot"></div>
+                <span class="status-text">Online</span>
+            </div>
+        </header>
+
+        <!-- Chat Messages Area -->
+        <main class="chat-area" id="chat-area">
+
+            <!-- Welcome message -->
+            <div class="welcome-card" id="welcome-card">
+                <div class="welcome-icon">✨</div>
+                <h2>Welcome to LifeSync</h2>
+                <p>Your personal AI concierge. I can help you with:</p>
+                <div class="capabilities">
+                    <button class="capability-chip" data-message="What time is it right now?" id="chip-time">
+                        🕐 Current Time
+                    </button>
+                    <button class="capability-chip" data-message="What's the weather like in Tokyo?" id="chip-weather">
+                        🌤️ Weather
+                    </button>
+                    <button class="capability-chip" data-message="Calculate 15% tip on $85.50" id="chip-calc">
+                        🧮 Calculations
+                    </button>
+                    <button class="capability-chip" data-message="Save a note: Buy groceries tomorrow" id="chip-notes">
+                        📝 Notes
+                    </button>
+                </div>
+            </div>
+
+            <!-- Messages will be injected here -->
+            <div class="messages-container" id="messages-container"></div>
+
+            <!-- Typing indicator -->
+            <div class="typing-indicator" id="typing-indicator">
+                <div class="typing-avatar">
+                    <svg width="20" height="20" viewBox="0 0 28 28" fill="none">
+                        <circle cx="14" cy="14" r="12" stroke="url(#grad2)" stroke-width="2.5" fill="none"/>
+                        <circle cx="14" cy="14" r="5" fill="url(#grad2)"/>
+                        <defs>
+                            <linearGradient id="grad2" x1="0" y1="0" x2="28" y2="28">
+                                <stop offset="0%" stop-color="#a78bfa"/>
+                                <stop offset="100%" stop-color="#6ee7b7"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="typing-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </main>
+
+        <!-- Input Area -->
+        <footer class="input-area" id="input-area">
+            <div class="input-wrapper">
+                <input
+                    type="text"
+                    id="message-input"
+                    placeholder="Ask me anything..."
+                    maxlength="2000"
+                    autocomplete="off"
+                    aria-label="Chat message input"
+                >
+                <button id="send-btn" aria-label="Send message" title="Send message">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </div>
+            <p class="input-hint">Powered by Google Gemini &amp; ADK</p>
+        </footer>
+
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
