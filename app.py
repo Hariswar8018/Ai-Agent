@@ -28,7 +28,6 @@ app = Flask(__name__)
 # ADK Agent Setup (lazy initialization)
 # ---------------------------------------------------------------------------
 _runner = None
-_session_service = None
 _sessions: dict[str, str] = {}  # maps client_id -> session_id
 
 # Maximum allowed message length (security: prevent abuse)
@@ -36,20 +35,20 @@ MAX_MESSAGE_LENGTH = 2000
 
 
 def _get_runner():
-    """Lazily initialize the ADK runner and session service."""
-    global _runner, _session_service
+    """Lazily initialize the ADK runner.
+
+    ADK 2.x InMemoryRunner manages sessions internally.
+    """
+    global _runner
 
     if _runner is None:
         from google.adk.runners import InMemoryRunner
-        from google.adk.sessions import InMemorySessionService
-
         from agent import create_agent
 
         agent = create_agent()
-        _session_service = InMemorySessionService()
-        _runner = InMemoryRunner(agent=agent, session_service=_session_service)
+        _runner = InMemoryRunner(agent=agent, app_name="lifesync")
 
-    return _runner, _session_service
+    return _runner
 
 
 async def _run_agent(user_message: str, client_id: str) -> str:
@@ -59,12 +58,13 @@ async def _run_agent(user_message: str, client_id: str) -> str:
     """
     from google.genai.types import Content, Part
 
-    runner, session_service = _get_runner()
+    runner = _get_runner()
 
-    # Create or reuse session for this client
+    # Create or reuse a session for this client
     if client_id not in _sessions:
         session_id = str(uuid.uuid4())
-        await session_service.create_session(
+        # ADK 2.x: create session via runner's internal session service
+        await runner.session_service.create_session(
             app_name="lifesync",
             user_id=client_id,
             session_id=session_id,
